@@ -2,18 +2,20 @@
 
 ## users テーブル
 
-| Column             | Type    | Options     |
-| ------------------ | ------- | ----------- |
-| nickname           | string  | null: false |
-| email              | string  | null: false, unique: true |
-| encrypted_password | string  | null: false |
-| name               | string  | null: false |
-| name_pronounce     | string  | null: false |
-| birth_date         | integer | null: false, foreign_key: true |
+| Column               | Type    | Options     |
+| -------------------- | ------- | ----------- |
+| nickname             | string  | null: false |
+| email                | string  | null: false, unique: true |
+| encrypted_password   | string  | null: false |
+| first_name           | string  | null: false |
+| last_name            | string  | null: false |
+| first_name_pronounce | string  | null: false |
+| last_name_pronounce  | string  | null: false |
+| birth_date_id        | date    | null: false |
 
 ### Association
-- has_many :item
-- has_many :order
+- has_many :items
+- has_many :orders
 
 
 ## items テーブル
@@ -24,11 +26,11 @@
 | price              | integer    | null: false |
 | user               | references | null: false, foreign_key: true |
 | description        | text       | null: false |
-| category           | integer    | null: false, foreign_key: true |
-| condition          | integer    | null: false, foreign_key: true |
-| shipping_cost      | integer    | null: false, foreign_key: true |
-| shipping_origin    | integer    | null: false, foreign_key: true |
-| delivery_time      | integer    | null: false, foreign_key: true |
+| category_id        | integer    | null: false |
+| condition_id       | integer    | null: false |
+| shipping_cost_id   | integer    | null: false |
+| prefecture_id      | integer    | null: false |
+| delivery_time_id   | integer    | null: false |
 
 ### Association
 - belongs_to :user
@@ -45,7 +47,7 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
-- has_many   :address
+- has_one    :address
 
 
 ## addresses テーブル
@@ -54,8 +56,8 @@
 | ------------------ | ---------- | ----------- |
 | order              | references | null: false, foreign_key: true |
 | post_code          | string     | null: false |
-| prefecture         | integer    | null: false, foreign_key: true |
-| municipalities     | string     | null: false |
+| prefecture_id      | integer    | null: false |
+| municipal_area     | string     | null: false |
 | street_number      | string     | null: false |
 | building           | string     |             |
 | phone_number       | string     | null: false |
