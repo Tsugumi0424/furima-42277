@@ -9,9 +9,9 @@
 | encrypted_password   | string  | null: false |
 | first_name           | string  | null: false |
 | last_name            | string  | null: false |
-| first_name_pronounce | string  | null: false |
-| last_name_pronounce  | string  | null: false |
-| birth_date_id        | date    | null: false |
+| first_name_kana      | string  | null: false |
+| last_name_kana       | string  | null: false |
+| birth_date           | date    | null: false |
 
 ### Association
 - has_many :items
@@ -30,7 +30,7 @@
 | condition_id       | integer    | null: false |
 | shipping_cost_id   | integer    | null: false |
 | prefecture_id      | integer    | null: false |
-| delivery_time_id   | integer    | null: false |
+| shipping_time_id   | integer    | null: false |
 
 ### Association
 - belongs_to :user
@@ -57,7 +57,7 @@
 | order              | references | null: false, foreign_key: true |
 | post_code          | string     | null: false |
 | prefecture_id      | integer    | null: false |
-| municipal_area     | string     | null: false |
+| municipality       | string     | null: false |
 | street_number      | string     | null: false |
 | building           | string     |             |
 | phone_number       | string     | null: false |
