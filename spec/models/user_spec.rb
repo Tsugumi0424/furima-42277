@@ -6,7 +6,13 @@ RSpec.describe User, type: :model do
       @user = FactoryBot.build(:user)
     end
 
-    context '必須項目が空の場合' do
+    context '新規登録できるとき' do
+      it 'nicknameとpasswordとpassword_confirmationがlast_nameとemailとfirst_nameとlast_name_kanaとfirst_name_kanaとbirth_dateが存在すれば登録できる' do
+        expect(@user).to be_valid
+      end
+    end
+
+    context '新規登録できないとき' do
       it 'nicknameが空では登録できない' do
         @user.nickname = ''
         @user.valid?
@@ -34,10 +40,8 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Birth date can't be blank")
       end
-    end
 
-    context 'パスワードの形式が不正な場合' do
-      %w[abcdef 123456].each do |invalid_password|
+      %w[abcdef 123456 あいうえお].each do |invalid_password|
         it "passwordが「#{invalid_password}」では登録できない" do
           @user.password = invalid_password
           @user.password_confirmation = invalid_password
@@ -45,9 +49,13 @@ RSpec.describe User, type: :model do
           expect(@user.errors.full_messages).to include('Password is invalid. Include both letters and numbers')
         end
       end
-    end
+      it 'passwordとpassword_confirmationが不一致では登録できない' do
+        @user.password = '123456'
+        @user.password_confirmation = '1234567'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
 
-    context '名前関連の形式が不正な場合' do
       [[:last_name, 'Last name is invalid. Input full-width characters'],
        [:first_name, 'First name is invalid. Input full-width characters'],
        [:last_name_kana, 'Last name kana is invalid. Input full-width katakana characters'],
