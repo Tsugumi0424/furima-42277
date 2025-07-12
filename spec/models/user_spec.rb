@@ -37,22 +37,21 @@ RSpec.describe User, type: :model do
     end
 
     context 'パスワードの形式が不正な場合' do
-      ['abcdef', '123456'].each do |invalid_password|
+      %w[abcdef 123456].each do |invalid_password|
         it "passwordが「#{invalid_password}」では登録できない" do
           @user.password = invalid_password
           @user.password_confirmation = invalid_password
           @user.valid?
-          expect(@user.errors.full_messages).to include("Password is invalid. Include both letters and numbers")
+          expect(@user.errors.full_messages).to include('Password is invalid. Include both letters and numbers')
         end
       end
     end
 
     context '名前関連の形式が不正な場合' do
-      [[:last_name, "Last name is invalid. Input full-width characters"],
-        [:first_name, "First name is invalid. Input full-width characters"],
-        [:last_name_kana, "Last name kana is invalid. Input full-width katakana characters"],
-        [:first_name_kana, "First name kana is invalid. Input full-width katakana characters"]
-      ].each do |attribute, message|
+      [[:last_name, 'Last name is invalid. Input full-width characters'],
+       [:first_name, 'First name is invalid. Input full-width characters'],
+       [:last_name_kana, 'Last name kana is invalid. Input full-width katakana characters'],
+       [:first_name_kana, 'First name kana is invalid. Input full-width katakana characters']].each do |attribute, message|
         it "#{attribute}が無効な値では登録できない" do
           @user[attribute] = 'abc123'
           @user.valid?
