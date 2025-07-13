@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :category, :condition, :shipping_cost, :prefecture
+  belongs_to :category, :condition, :shipping_cost, :prefecture, :shipping_time
 
 end
