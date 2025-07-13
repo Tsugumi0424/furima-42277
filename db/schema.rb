@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_13_082711) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_13_093604) do
+  create_table "categories", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "items", charset: "utf8mb3", force: :cascade do |t|
     t.string "title", null: false
     t.integer "price", null: false
