@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
-    def index
+  before_action :move_to_index, except: [:index, :show]
+
+  def index
     @items = Item.all
   end
 
@@ -33,4 +35,10 @@ class ItemsController < ApplicationController
       .merge(user_id: current_user.id)
   end
   
+  def move_to_index
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    end
+  end
+
 end
