@@ -18,7 +18,6 @@ class ItemsController < ApplicationController
     end
   end
 
-
   private
 
   def item_params
@@ -31,14 +30,14 @@ class ItemsController < ApplicationController
       :shipping_cost_id,
       :prefecture_id,
       :shipping_time_id,
-      :image)
-      .merge(user_id: current_user.id)
-  end
-  
-  def move_to_index
-    unless user_signed_in?
-      redirect_to new_user_session_path
-    end
+      :image
+    )
+          .merge(user_id: current_user.id)
   end
 
+  def move_to_index
+    return if user_signed_in?
+
+    redirect_to new_user_session_path
+  end
 end
