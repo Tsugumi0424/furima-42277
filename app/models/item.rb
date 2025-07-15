@@ -12,7 +12,7 @@ class Item < ApplicationRecord
 
   validates :image, presence: true
   validates :title, presence: { message: "can't be blank"}, length: { maximum: 40 }
-  validates :description, presence: { message: "can't be blank"}, length: { minimum: 7, maximum: 1000 }
+  validates :description, presence: { message: "can't be blank"}, length: { maximum: 1000 }
   validates :price, presence: true,
                     format: { with: VALID_PRICE_REGEX,  message: "is not a number"},
                     numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
@@ -21,7 +21,7 @@ class Item < ApplicationRecord
             :shipping_cost_id,
             :prefecture_id,
             :shipping_time_id,
-            numericality: { other_than: 1 , message: "can't be blank"} 
+            numericality: { other_than: 0 , message: "can't be blank"} 
 
 
 end
