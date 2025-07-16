@@ -29,27 +29,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Description can't be blank")
       end
       it 'categoryが空では登録できない' do
-        @item.category_id = ''
+        @item.category_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
       it 'conditionが空では登録できない' do
-        @item.condition_id = ''
+        @item.condition_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
       it 'shipping_costが空では登録できない' do
-        @item.shipping_cost_id = ''
+        @item.shipping_cost_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping cost can't be blank")
       end
       it 'prefectureが空では登録できない' do
-        @item.prefecture_id = ''
+        @item.prefecture_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
       it 'shipping_timeが空では登録できない' do
-        @item.shipping_time_id = ''
+        @item.shipping_time_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping time can't be blank")
       end
@@ -81,6 +81,14 @@ RSpec.describe Item, type: :model do
         @item.price = Faker::Number.number(digits: 10_000_000)
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+      end
+
+      %w[abcdef あいうえお 漢字].each do |invalid_price|
+        it "priceが「#{invalid_price}」では登録できない" do
+          @item.price = invalid_price
+          @item.valid?
+          expect(@item.errors.full_messages).to include('Price is not a number')
+        end
       end
 
       it 'ユーザーが紐付いていなければ出品できない' do
