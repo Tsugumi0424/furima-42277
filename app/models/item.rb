@@ -8,14 +8,11 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
 
-  VALID_PRICE_REGEX = /\A[0-9]+\z/
-
   validates :image, presence: true
   validates :title, presence: { message: "can't be blank" }, length: { maximum: 40 }
   validates :description, presence: { message: "can't be blank" }, length: { maximum: 1000 }
   validates :price, presence: true,
-                    format: { with: VALID_PRICE_REGEX, message: 'is not a number' },
-                    numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+                    numericality: { only_integer:true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
   validates :category_id,
             :condition_id,
             :shipping_cost_id,
