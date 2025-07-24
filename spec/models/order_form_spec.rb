@@ -51,7 +51,7 @@ RSpec.describe OrderForm, type: :model do
         it "post codeが「#{invalid_post_code}」では購入できない" do
           @order_form.post_code = invalid_post_code
           @order_form.valid?
-          expect(@order_form.errors.full_messages).to include("Post code is invalid. Enter it as follows (e.g. 123-4567)")
+          expect(@order_form.errors.full_messages).to include('Post code is invalid. Enter it as follows (e.g. 123-4567)')
         end
       end
 
@@ -65,10 +65,9 @@ RSpec.describe OrderForm, type: :model do
         it "phone numberが「#{invalid_phone_number}」では購入できない" do
           @order_form.phone_number = invalid_phone_number
           @order_form.valid?
-          expect(@order_form.errors.full_messages).to include("Phone number is invalid. Input only number")
+          expect(@order_form.errors.full_messages).to include('Phone number is invalid. Input only number')
         end
       end
-
     end
   end
 end

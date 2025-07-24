@@ -11,13 +11,14 @@ class OrdersController < ApplicationController
     if @order.valid?
       pay_item
       @order.save
-      return redirect_to root_path
+      redirect_to root_path
     else
       render 'index', status: :unprocessable_entity
     end
   end
 
   private
+
   def order_params
     params.require(:order_form).permit(
       :post_code,
@@ -29,18 +30,17 @@ class OrdersController < ApplicationController
       :user_id,
       :item_id
     ).merge(token: params[:token],
-    user_id: current_user.id,
-    item_id: params[:item_id]
-    )
+            user_id: current_user.id,
+            item_id: params[:item_id])
   end
 
   def set_order
     @item = Item.find(params[:item_id])
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: order_params[:token],
@@ -49,10 +49,8 @@ class OrdersController < ApplicationController
   end
 
   def move_to_index
-    if current_user.id == @item.user_id || @item.order.present?
-      redirect_to root_path
-    end
+    return unless current_user.id == @item.user_id || @item.order.present?
+
+    redirect_to root_path
   end
-
-
 end
