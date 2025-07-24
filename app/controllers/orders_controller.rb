@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_order
+  before_action :move_to_index, only: [:index, :create]
   def index
-    @item = Item.find(params[:item_id])
     @order = OrderForm.new
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order = OrderForm.new(order_params)
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     if @order.valid?
       pay_item
       @order.save
@@ -29,7 +28,15 @@ class OrdersController < ApplicationController
       :phone_number,
       :user_id,
       :item_id
-    ).merge(token: params[:token])
+    ).merge(token: params[:token],
+    user_id: current_user.id,
+    item_id: params[:item_id]
+    )
+  end
+
+  def set_order
+    @item = Item.find(params[:item_id])
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
   end
 
   def pay_item
@@ -39,6 +46,12 @@ class OrdersController < ApplicationController
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def move_to_index
+    if current_user.id == @item.user_id || @item.order.present?
+      redirect_to root_path
+    end
   end
 
 
