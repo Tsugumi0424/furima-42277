@@ -10,7 +10,7 @@ RSpec.describe OrderForm, type: :model do
     end
 
     context '商品購入できるとき' do
-      it '必要な情報がすべて存在すれば登録できる' do
+      it '必要な情報がすべて存在すれば購入できる' do
         expect(@order_form).to be_valid
       end
     end
