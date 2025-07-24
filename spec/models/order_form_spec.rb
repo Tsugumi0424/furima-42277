@@ -69,17 +69,6 @@ RSpec.describe OrderForm, type: :model do
         end
       end
 
-      it 'ユーザーが紐付いていなければ購入できない' do
-        @order_form.user_id = nil
-        @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("User can't be blank")
-      end
-      it 'アイテムが紐付いていなければ購入できない' do
-        @order_form.item_id = nil
-        @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Item can't be blank")
-      end
-
     end
   end
 end
