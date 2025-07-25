@@ -13,6 +13,10 @@ RSpec.describe OrderForm, type: :model do
       it '必要な情報がすべて存在すれば購入できる' do
         expect(@order_form).to be_valid
       end
+      it 'buildingが空でも購入できる' do
+        @order_form.building = ''
+        @order_form.valid?
+      end
     end
 
     context '商品購入できないとき' do
@@ -68,6 +72,19 @@ RSpec.describe OrderForm, type: :model do
           expect(@order_form.errors.full_messages).to include('Phone number is invalid. Input only number')
         end
       end
+
+      it 'ユーザーが紐付いていなければ購入できない' do
+        @order_form.user_id = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("User can't be blank")
+      end
+      it 'アイテムが紐付いていなければ購入できない' do
+        @order_form.item_id = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Item can't be blank")
+      end
+
+
     end
   end
 end
