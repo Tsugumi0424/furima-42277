@@ -6,16 +6,19 @@ class OrderForm
 
   VALID_POSTCODE_REGEX = /\A\d{3}-\d{4}\z/
 
-  validates :token, presence: true
-  validates :post_code, presence: true,
-                        format: { with: VALID_POSTCODE_REGEX, message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
+  with_options presence: true do
+    validates :token
+    validates :post_code, format: { with: VALID_POSTCODE_REGEX, message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
+    validates :municipality
+    validates :street_number
+    validates :phone_number, length: { minimum: 10, maximum: 11, message: 'is too short' },
+                           numericality: { only_integer: true, message: 'is invalid. Input only number' }
+    validates :user_id
+    validates :item_id
+  end
+
   validates :prefecture_id,
             numericality: { other_than: 0, message: "can't be blank" }
-  validates :municipality, presence: true
-  validates :street_number, presence: true
-  validates :phone_number, presence: true,
-                           length: { minimum: 10, maximum: 11, message: 'is too short' },
-                           numericality: { only_integer: true, message: 'is invalid. Input only number' }
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
