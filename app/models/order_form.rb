@@ -12,7 +12,7 @@ class OrderForm
     validates :municipality
     validates :street_number
     validates :phone_number, length: { minimum: 10, maximum: 11, message: 'is too short' },
-                           numericality: { only_integer: true, message: 'is invalid. Input only number' }
+                             numericality: { only_integer: true, message: 'is invalid. Input only number' }
     validates :user_id
     validates :item_id
   end

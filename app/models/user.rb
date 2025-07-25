@@ -15,10 +15,10 @@ class User < ApplicationRecord
     validates :nickname
     validates :birth_date
     validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'is invalid. Include both letters and numbers' },
-                       if: :password_required?
+                         if: :password_required?
     validates :last_name, format: { with: VALID_NAME_REGEX, message: 'is invalid. Input full-width characters' }
     validates :first_name, format: { with: VALID_NAME_REGEX, message: 'is invalid. Input full-width characters' }
-    validates :last_name_kana,format: { with: VALID_KANA_REGEX, message: 'is invalid. Input full-width katakana characters' }
-    validates :first_name_kana,format: { with: VALID_KANA_REGEX, message: 'is invalid. Input full-width katakana characters' }
+    validates :last_name_kana, format: { with: VALID_KANA_REGEX, message: 'is invalid. Input full-width katakana characters' }
+    validates :first_name_kana, format: { with: VALID_KANA_REGEX, message: 'is invalid. Input full-width katakana characters' }
   end
 end
