@@ -400,7 +400,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
-  unicorn
+  unicorn (= 6.1.0)
   web-console
 
 RUBY VERSION
